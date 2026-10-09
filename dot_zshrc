@@ -1,0 +1,89 @@
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=10000
+setopt extended_history share_history hist_ignore_dups hist_ignore_space hist_verify
+setopt auto_cd auto_pushd pushd_ignore_dups pushdminus interactivecomments
+
+
+# keys
+bindkey -e
+autoload -U up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[OA' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+bindkey '^[OB' down-line-or-beginning-search
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+bindkey '^[[3~' delete-char
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
+bindkey '^[[Z' reverse-menu-complete
+
+
+# completion
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
+export NODE_OPTIONS=--dns-result-order=ipv4first
+
+# mac / fedora
+if [[ -d /Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home ]]; then
+  export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home
+elif [[ -d /usr/lib/jvm/java-17-openjdk ]]; then
+  export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+fi
+
+
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/share/fnm:$PATH"
+export PATH="$HOME/.opencode/bin:$PATH"
+export PATH="$HOME/.antigravity-ide/antigravity-ide/bin:$PATH"
+export PATH=$PATH:$HOME/.maestro/bin
+export PATH=$PATH:$HOME/Library/Python/3.9/bin
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export PATH="$PATH:$HOME/go/bin"
+
+
+[[ $commands[starship] ]] && eval "$(starship init zsh)"
+[[ $commands[zoxide] ]] && eval "$(zoxide init zsh)"
+
+[[ $commands[ng] ]] && source <(ng completion script)
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+if [[ $commands[terraform] ]]; then
+  autoload -U +X bashcompinit && bashcompinit
+  complete -o nospace -C $commands[terraform] terraform
+fi
+
+
+# ls --color is gnu, -G is the mac fallback
+if ls --color=auto >/dev/null 2>&1; then
+  alias ls='ls --color=auto'
+else
+  alias ls='ls -G'
+fi
+alias l='ls -lah'
+alias ll='ls -lh'
+alias la='ls -lAh'
+alias lsa='ls -lah'
+alias grep='grep --color=auto'
+alias -- -='cd -'
+alias k="kubectl"
+
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+
+# fnm
+[[ $commands[fnm] ]] && eval "$(fnm env --shell zsh)"

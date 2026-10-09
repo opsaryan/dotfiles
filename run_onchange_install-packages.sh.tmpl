@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+
+{{/* Install Dependencies */}}
+
+{{ if eq .chezmoi.os "darwin" }}
+
+brew install starship \
+             zoxide \
+             neovim \
+             kubectl \
+             fzf \
+             go \
+             kind \
+             pnpm \
+             ansible \
+             bat \
+             awscli \
+             go-task \
+             ripgrep \
+             gh \
+             tmux
+
+if [ ! -d /Applications/Obsidian.app ]; then
+curl -fsSL -o /tmp/Obsidian.dmg "$(curl -fsSL https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -o 'https://[^"]*/Obsidian-[0-9.]*\.dmg')"
+hdiutil attach -nobrowse -mountpoint /Volumes/Obsidian /tmp/Obsidian.dmg
+cp -R /Volumes/Obsidian/Obsidian.app /Applications/
+hdiutil detach /Volumes/Obsidian
+fi
+
+if [ ! -d /Applications/Docker.app ]; then
+curl -fsSL -o /tmp/Docker.dmg https://desktop.docker.com/mac/main/{{ if eq .chezmoi.arch "arm64" }}arm64{{ else }}amd64{{ end }}/Docker.dmg
+sudo hdiutil attach /tmp/Docker.dmg
+sudo /Volumes/Docker/Docker.app/Contents/MacOS/install
+sudo hdiutil detach /Volumes/Docker
+fi
+
+{{ else if eq .chezmoi.os "linux" }}
+
+sudo dnf install -y zoxide \
+                    neovim \
+                    zsh \
+                    fzf \
+                    unzip \
+                    golang \
+                    kind \
+                    pnpm \
+                    ansible \
+                    bat \
+                    awscli2 \
+                    go-task \
+                    ripgrep \
+                    gh \
+                    tmux
+chsh -s $(which zsh)
+curl -sS https://starship.rs/install.sh | sh
+
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://pkgs.k8s.io/core:/stable:/v1.37/rpm/
+enabled=1
+gpgcheck=1
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.37/rpm/repodata/repomd.xml.key
+EOF
+
+sudo dnf install -y kubectl
+
+sudo dnf remove docker \
+                docker-client \
+                docker-client-latest \
+                docker-common \
+                docker-latest \
+                docker-latest-logrotate \
+                docker-logrotate \
+                docker-selinux \
+                docker-engine-selinux \
+                docker-engine
+sudo dnf config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+
+sudo dnf install -y fuse-libs
+mkdir -p ~/.local/bin
+curl -fsSL -o ~/.local/bin/obsidian "$(curl -fsSL https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -o 'https://[^"]*/Obsidian-[0-9.]*\.AppImage')"
+chmod +x ~/.local/bin/obsidian
+
+{{ end }}
+
+curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+go install github.com/bootdotdev/bootdev@latest
