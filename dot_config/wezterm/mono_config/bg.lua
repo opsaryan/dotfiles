@@ -10,5 +10,5 @@ background.window_background_image_hsb = {
   hue = 1.0,
 }
 
--- background.window_background_opacity = 0.9
+background.window_background_opacity = 0.9
 return background
