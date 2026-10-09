@@ -1,0 +1,18 @@
+[user]
+{{- if eq .chezmoi.os "darwin" }}
+	name = aryan
+	email = aaryan@apimaker.dev
+[includeIf "hasconfig:remote.*.url:git@github-private.com:*/*"]
+	path = ~/.gitconfig-github-private
+{{- else }}
+	name = aryan
+	email = aryanchristian55@gmail.com
+{{- end }}
+[alias]
+	st = status --short
+	co = checkout
+	br = branch
+	cm = commit
+	lg = log --oneline --graph --decorate --all
+	unstage = restore --staged
+	last = log -1 HEAD
