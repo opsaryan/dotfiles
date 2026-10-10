@@ -2,6 +2,10 @@
 
 {{/* Install Dependencies */}}
 
+curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+fnm install --latest
+go install github.com/bootdotdev/bootdev@latest
+
 {{ if eq .chezmoi.os "darwin" }}
 
 brew install starship \
@@ -90,5 +94,3 @@ npm install -g @bitwarden/cli
 
 {{ end }}
 
-curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
-go install github.com/bootdotdev/bootdev@latest
