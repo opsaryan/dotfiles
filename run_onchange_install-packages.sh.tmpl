@@ -82,6 +82,7 @@ sudo usermod -aG docker $USER
 
 sudo dnf install -y fuse-libs
 mkdir -p ~/.local/bin
+mkdir -p ~/.local/share/icons/
 curl -fsSL -o ~/.local/bin/obsidian "$(curl -fsSL https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -o 'https://[^"]*/Obsidian-[0-9.]*\.AppImage')"
 chmod +x ~/.local/bin/obsidian
 
