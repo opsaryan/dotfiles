@@ -33,6 +33,7 @@ sudo hdiutil attach /tmp/Docker.dmg
 sudo /Volumes/Docker/Docker.app/Contents/MacOS/install
 sudo hdiutil detach /Volumes/Docker
 fi
+npm install -g @bitwarden/cli
 
 {{ else if eq .chezmoi.os "linux" }}
 
@@ -85,6 +86,7 @@ mkdir -p ~/.local/bin
 mkdir -p ~/.local/share/icons/
 curl -fsSL -o ~/.local/bin/obsidian "$(curl -fsSL https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -o 'https://[^"]*/Obsidian-[0-9.]*\.AppImage')"
 chmod +x ~/.local/bin/obsidian
+npm install -g @bitwarden/cli
 
 {{ end }}
 
