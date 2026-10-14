@@ -23,7 +23,7 @@ bindkey '^[[Z' reverse-menu-complete
 
 
 # completion
-fpath=(~/.zsh/completion $fpath)
+fpath=(~/.zsh/completion /opt/homebrew/share/zsh/site-functions $fpath)
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -59,7 +59,6 @@ export PATH="$PATH:$HOME/go/bin"
 [[ $commands[zoxide] ]] && eval "$(zoxide init zsh)"
 
 [[ $commands[ng] ]] && source <(ng completion script)
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 if [[ $commands[terraform] ]]; then
   autoload -U +X bashcompinit && bashcompinit
   complete -o nospace -C $commands[terraform] terraform

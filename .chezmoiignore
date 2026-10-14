@@ -1,3 +1,7 @@
 {{ if ne .chezmoi.os "linux" }}
 .local/share/applications
 {{ end }}
+
+{{ if ne .profile "work" }}
+.gitconfig-github-private
+{{ end }}

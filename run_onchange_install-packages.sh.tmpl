@@ -5,6 +5,7 @@
 curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
 fnm install --latest
 go install github.com/bootdotdev/bootdev@latest
+curl -fsSL https://get.jetify.com/devbox | bash -s -- -f
 
 {{ if eq .chezmoi.os "darwin" }}
 
@@ -22,7 +23,8 @@ brew install starship \
              go-task \
              ripgrep \
              gh \
-             tmux
+             tmux \
+             yazi
 
 if [ ! -d /Applications/Obsidian.app ]; then
 curl -fsSL -o /tmp/Obsidian.dmg "$(curl -fsSL https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -o 'https://[^"]*/Obsidian-[0-9.]*\.dmg')"
@@ -55,7 +57,8 @@ sudo dnf install -y zoxide \
                     go-task \
                     ripgrep \
                     gh \
-                    tmux
+                    tmux \
+                    jq
 chsh -s $(which zsh)
 curl -sS https://starship.rs/install.sh | sh
 
@@ -93,4 +96,3 @@ chmod +x ~/.local/bin/obsidian
 npm install -g @bitwarden/cli
 
 {{ end }}
-

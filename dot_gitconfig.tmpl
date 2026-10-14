@@ -1,12 +1,9 @@
 [user]
-{{- if eq .chezmoi.os "darwin" }}
-	name = aryan
-	email = aaryan@apimaker.dev
+	name = {{ .name }}
+	email = {{ .email }}
+{{- if eq .profile "work" }}
 [includeIf "hasconfig:remote.*.url:git@github-private.com:*/*"]
 	path = ~/.gitconfig-github-private
-{{- else }}
-	name = aryan
-	email = aryanchristian55@gmail.com
 {{- end }}
 [alias]
 	st = status --short
