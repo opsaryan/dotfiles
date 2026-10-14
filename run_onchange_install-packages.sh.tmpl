@@ -10,7 +10,6 @@ brew install starship \
              fzf \
              go \
              kind \
-             pnpm \
              ansible \
              bat \
              awscli \
@@ -48,7 +47,6 @@ sudo dnf install -y zsh \
                     jq \
                     golang \
                     kind \
-                    pnpm \
                     ansible \
                     bat \
                     awscli2 \
@@ -110,7 +108,7 @@ curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
 export PATH="$HOME/.local/share/fnm:$PATH"
 eval "$(fnm env --shell bash)"
 fnm install --latest
-npm install -g @bitwarden/cli
+npm install -g pnpm @bitwarden/cli
 
 # devbox
 curl -fsSL https://get.jetify.com/devbox | bash -s -- -f
