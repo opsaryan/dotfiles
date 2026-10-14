@@ -60,7 +60,7 @@ chsh -s $(which zsh)
 mkdir -p ~/.local/bin ~/.zsh/completion
 
 # starship
-curl -sS https://starship.rs/install.sh | sh
+curl -sS https://starship.rs/install.sh | sh -s -- -y -b ~/.local/bin
 
 # kubectl
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
