@@ -1,14 +1,8 @@
 #!/usr/bin/env bash
 
-{{/* Install Dependencies */}}
+{{ if eq .chezmoi.os "darwin" -}}
 
-curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
-fnm install --latest
-go install github.com/bootdotdev/bootdev@latest
-curl -fsSL https://get.jetify.com/devbox | bash -s -- -f
-
-{{ if eq .chezmoi.os "darwin" }}
-
+# packages
 brew install starship \
              zoxide \
              neovim \
@@ -26,28 +20,32 @@ brew install starship \
              tmux \
              yazi
 
+# obsidian
 if [ ! -d /Applications/Obsidian.app ]; then
-curl -fsSL -o /tmp/Obsidian.dmg "$(curl -fsSL https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -o 'https://[^"]*/Obsidian-[0-9.]*\.dmg')"
-hdiutil attach -nobrowse -mountpoint /Volumes/Obsidian /tmp/Obsidian.dmg
-cp -R /Volumes/Obsidian/Obsidian.app /Applications/
-hdiutil detach /Volumes/Obsidian
+  url=$(curl -fsSL https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -o 'https://[^"]*/Obsidian-[0-9.]*\.dmg')
+  curl -fsSL -o /tmp/Obsidian.dmg "$url"
+  hdiutil attach -nobrowse -mountpoint /Volumes/Obsidian /tmp/Obsidian.dmg
+  cp -R /Volumes/Obsidian/Obsidian.app /Applications/
+  hdiutil detach /Volumes/Obsidian
 fi
 
+# docker
 if [ ! -d /Applications/Docker.app ]; then
-curl -fsSL -o /tmp/Docker.dmg https://desktop.docker.com/mac/main/{{ if eq .chezmoi.arch "arm64" }}arm64{{ else }}amd64{{ end }}/Docker.dmg
-sudo hdiutil attach /tmp/Docker.dmg
-sudo /Volumes/Docker/Docker.app/Contents/MacOS/install
-sudo hdiutil detach /Volumes/Docker
+  curl -fsSL -o /tmp/Docker.dmg https://desktop.docker.com/mac/main/{{ if eq .chezmoi.arch "arm64" }}arm64{{ else }}amd64{{ end }}/Docker.dmg
+  sudo hdiutil attach /tmp/Docker.dmg
+  sudo /Volumes/Docker/Docker.app/Contents/MacOS/install
+  sudo hdiutil detach /Volumes/Docker
 fi
-npm install -g @bitwarden/cli
 
-{{ else if eq .chezmoi.os "linux" }}
+{{- else if eq .chezmoi.os "linux" -}}
 
-sudo dnf install -y zoxide \
+# packages
+sudo dnf install -y zsh \
+                    zoxide \
                     neovim \
-                    zsh \
                     fzf \
                     unzip \
+                    jq \
                     golang \
                     kind \
                     pnpm \
@@ -58,10 +56,15 @@ sudo dnf install -y zoxide \
                     ripgrep \
                     gh \
                     tmux \
-                    jq
+                    fuse-libs
+
 chsh -s $(which zsh)
+mkdir -p ~/.local/bin ~/.zsh/completion
+
+# starship
 curl -sS https://starship.rs/install.sh | sh
 
+# kubectl
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -70,9 +73,9 @@ enabled=1
 gpgcheck=1
 gpgkey=https://pkgs.k8s.io/core:/stable:/v1.37/rpm/repodata/repomd.xml.key
 EOF
-
 sudo dnf install -y kubectl
 
+# docker
 sudo dnf remove docker \
                 docker-client \
                 docker-client-latest \
@@ -88,11 +91,29 @@ sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 sudo systemctl enable --now docker
 sudo usermod -aG docker $USER
 
-sudo dnf install -y fuse-libs
-mkdir -p ~/.local/bin
-mkdir -p ~/.local/share/icons/
-curl -fsSL -o ~/.local/bin/obsidian "$(curl -fsSL https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -o 'https://[^"]*/Obsidian-[0-9.]*\.AppImage')"
+# obsidian
+url=$(curl -fsSL https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -o 'https://[^"]*/Obsidian-[0-9.]*\.AppImage')
+curl -fsSL -o ~/.local/bin/obsidian "$url"
 chmod +x ~/.local/bin/obsidian
+
+# yazi
+yazi=yazi-{{ if eq .chezmoi.arch "arm64" }}aarch64{{ else }}x86_64{{ end }}-unknown-linux-musl
+curl -fsSL -o /tmp/yazi.zip https://github.com/sxyazi/yazi/releases/latest/download/$yazi.zip
+unzip -o /tmp/yazi.zip -d /tmp
+install -m 755 /tmp/$yazi/yazi /tmp/$yazi/ya ~/.local/bin/
+cp /tmp/$yazi/completions/_yazi /tmp/$yazi/completions/_ya ~/.zsh/completion/
+
+{{- end }}
+
+# node
+curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+export PATH="$HOME/.local/share/fnm:$PATH"
+eval "$(fnm env --shell bash)"
+fnm install --latest
 npm install -g @bitwarden/cli
 
-{{ end }}
+# devbox
+curl -fsSL https://get.jetify.com/devbox | bash -s -- -f
+
+# bootdev
+go install github.com/bootdotdev/bootdev@latest
