@@ -1,0 +1,43 @@
+{
+    "chat.viewSessions.orientation": "stacked",
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "workbench.colorTheme": "Tokyo Night",
+    "CLAUDE_CODE_EXPERMENTAL_AGENT_TEAMS": 0,
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+    "claudeCode.preferredLocation": "panel",
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "explorer.confirmPasteNative": false,
+    "explorer.confirmDelete": false,
+    "git.enableSmartCommit": true,
+    "claudeCode.useTerminal": true,
+    "git.confirmSync": false,
+    "[plaintext]": {
+        "editor.unicodeHighlight.ambiguousCharacters": false,
+        "editor.unicodeHighlight.invisibleCharacters": false
+    },
+    "chat.tools.terminal.autoApprove": {
+        "npm install": true
+    },
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["\\"],
+            "commands": ["workbench.view.explorer"]
+        }
+    ],
+    "git.openRepositoryInParentFolders": "always",
+    "docker.extension.enableComposeLanguageServer": false,
+    "http.systemCertificatesNode": true,
+    "explorer.confirmDragAndDrop": false,
+    "yaml.disableSchemaDetection": [
+        "**/.github/workflows/*.yml",
+        "**/.github/workflows/*.yaml",
+        "**/.gitea/workflows/*.yml",
+        "**/.gitea/workflows/*.yaml",
+        "**/.forgejo/workflows/*.yml",
+        "**/.forgejo/workflows/*.yaml"
+    ],
+    "claudeCode.hideOnboarding": true
+}

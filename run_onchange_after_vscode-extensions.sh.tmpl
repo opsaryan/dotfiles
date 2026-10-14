@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# reruns when the list changes, hash: {{ include "vscode/extensions.txt" | sha256sum }}
+# to update the list: code --list-extensions > ~/.local/share/chezmoi/vscode/extensions.txt
+
+xargs -n 1 code --install-extension < {{ .chezmoi.sourceDir }}/vscode/extensions.txt

@@ -1,0 +1,7 @@
+[
+    {
+        "key": "\\",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "filesExplorerFocus && !inputFocus"
+    }
+]

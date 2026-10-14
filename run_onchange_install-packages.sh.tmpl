@@ -91,6 +91,20 @@ sudo usermod -aG docker $USER
 # kind, the dnf package pulls in moby-engine which conflicts with docker-ce
 go install sigs.k8s.io/kind@latest
 
+# vscode
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+cat <<EOF | sudo tee /etc/yum.repos.d/vscode.repo
+[code]
+name=Visual Studio Code
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+enabled=1
+autorefresh=1
+type=rpm-md
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+EOF
+sudo dnf install -y code
+
 # obsidian
 url=$(curl -fsSL https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -o 'https://[^"]*/Obsidian-[0-9.]*\.AppImage')
 curl -fsSL -o ~/.local/bin/obsidian "$url"

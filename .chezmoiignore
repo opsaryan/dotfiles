@@ -1,5 +1,12 @@
+vscode
+
+{{ if ne .chezmoi.os "darwin" }}
+Library
+{{ end }}
+
 {{ if ne .chezmoi.os "linux" }}
 .local/share/applications
+.config/Code
 {{ end }}
 
 {{ if ne .profile "work" }}
