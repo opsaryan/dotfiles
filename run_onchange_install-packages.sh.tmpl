@@ -46,7 +46,6 @@ sudo dnf install -y zsh \
                     unzip \
                     jq \
                     golang \
-                    kind \
                     ansible \
                     bat \
                     awscli2 \
@@ -88,6 +87,9 @@ sudo dnf config-manager addrepo --from-repofile https://download.docker.com/linu
 sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 sudo systemctl enable --now docker
 sudo usermod -aG docker $USER
+
+# kind, the dnf package pulls in moby-engine which conflicts with docker-ce
+go install sigs.k8s.io/kind@latest
 
 # obsidian
 url=$(curl -fsSL https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -o 'https://[^"]*/Obsidian-[0-9.]*\.AppImage')
