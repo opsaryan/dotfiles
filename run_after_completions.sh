@@ -4,7 +4,7 @@
 
 mkdir -p ~/.zsh/completion
 
-for tool in docker kubectl devbox eksctl; do
+for tool in docker kubectl devbox eksctl helm; do
   command -v $tool >/dev/null || continue
   $tool completion zsh > ~/.zsh/completion/_$tool
 done
