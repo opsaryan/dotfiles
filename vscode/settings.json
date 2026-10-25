@@ -111,6 +111,7 @@
         "editor.formatOnSave": true
     },
     "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml",
         "editor.tabSize": 2,
         "editor.insertSpaces": true
     },
@@ -148,6 +149,17 @@
         "vs-kubernetes.crd-code-completion": "enabled",
         "vs-kubernetes.ignore-recommendations": true
     },
+
+    "terraform.languageServer.enable": true,
+    "terminal.integrated.allowedLinkSchemes": [
+        "file",
+        "http",
+        "https",
+        "mailto",
+        "vscode",
+        "vscode-insiders",
+        "docker-desktop"
+    ],
 
     // Hide noise in explorer
     "files.exclude": {
