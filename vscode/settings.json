@@ -45,5 +45,112 @@
         "plaintext": false,
         "markdown": false,
         "scminput": false
+    },
+
+    // ---------- DevOps: auto-pick language per file, no manual switching ----------
+    "files.associations": {
+        // GitHub Actions
+        "**/.github/workflows/*.yml": "github-actions-workflow",
+        "**/.github/workflows/*.yaml": "github-actions-workflow",
+        "**/.github/actions/**/action.yml": "yaml",
+        // Helm chart templates (values.yaml/Chart.yaml stay plain yaml)
+        "**/templates/**/*.yaml": "helm",
+        "**/templates/**/*.yml": "helm",
+        "**/templates/**/*.tpl": "helm",
+        "**/templates/NOTES.txt": "helm",
+        // Ansible
+        "**/playbooks/**/*.yml": "ansible",
+        "**/playbooks/**/*.yaml": "ansible",
+        "**/roles/**/tasks/*.yml": "ansible",
+        "**/roles/**/tasks/*.yaml": "ansible",
+        "**/roles/**/handlers/*.yml": "ansible",
+        "**/roles/**/handlers/*.yaml": "ansible",
+        "**/roles/**/defaults/*.yml": "ansible",
+        "**/roles/**/vars/*.yml": "ansible",
+        "**/roles/**/meta/*.yml": "ansible",
+        "**/group_vars/**/*.yml": "ansible",
+        "**/host_vars/**/*.yml": "ansible",
+        "**/site.yml": "ansible",
+        "**/playbook*.yml": "ansible",
+        "**/*.j2": "jinja",
+        // Terraform
+        "*.tfvars": "terraform",
+        "*.hcl": "terraform"
+    },
+
+    // YAML schemas: k8s manifests auto-validated in common folders
+    "yaml.schemaStore.enable": true,
+    "yaml.schemas": {
+        "kubernetes": [
+            "**/k8s/**/*.yaml",
+            "**/k8s/**/*.yml",
+            "**/kubernetes/**/*.yaml",
+            "**/kubernetes/**/*.yml",
+            "**/manifests/**/*.yaml",
+            "**/manifests/**/*.yml",
+            "**/kustomize/**/*.yaml",
+            "**/deploy/**/*.yaml"
+        ]
+    },
+    "yaml.customTags": [
+        "!vault scalar",
+        "!reference sequence",
+        "!Ref scalar",
+        "!Sub scalar",
+        "!GetAtt scalar"
+    ],
+    "yaml.format.enable": true,
+    "yaml.validate": true,
+
+    // Per-language editor behavior
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml",
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.autoIndent": "advanced",
+        "editor.formatOnSave": true
+    },
+    "[github-actions-workflow]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
+    },
+    "[ansible]": {
+        "editor.defaultFormatter": "redhat.ansible",
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.formatOnSave": false
+    },
+    "[helm]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.formatOnSave": false
+    },
+    "[terraform]": {
+        "editor.defaultFormatter": "hashicorp.terraform",
+        "editor.formatOnSave": true
+    },
+    "[terraform-vars]": {
+        "editor.defaultFormatter": "hashicorp.terraform",
+        "editor.formatOnSave": true
+    },
+
+    // Ansible tooling
+    "ansible.validation.enabled": true,
+    "ansible.validation.lint.enabled": true,
+    "ansible.validation.lint.path": "/opt/homebrew/bin/ansible-lint",
+    "ansible.ansible.path": "/opt/homebrew/bin/ansible",
+    "ansible.lightspeed.enabled": false,
+
+    // Kubernetes / Helm tooling
+    "vs-kubernetes": {
+        "vs-kubernetes.kubectl-path.mac": "/opt/homebrew/bin/kubectl",
+        "vs-kubernetes.helm-path.mac": "/opt/homebrew/bin/helm",
+        "vs-kubernetes.crd-code-completion": "enabled",
+        "vs-kubernetes.ignore-recommendations": true
+    },
+
+    // Hide noise in explorer
+    "files.exclude": {
+        "**/.terraform": true
     }
 }
