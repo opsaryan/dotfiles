@@ -1,11 +1,8 @@
 ahmadalli.vscode-nginx-conf
 angular.ng-template
 anthropic.claude-code
-catppuccin.catppuccin-vsc
 christian-kohler.npm-intellisense
 dbaeumer.vscode-eslint
-docker.docker
-donjayamanne.python-environment-manager
 donjayamanne.python-extension-pack
 ecmel.vscode-html-css
 enkia.tokyo-night
@@ -13,10 +10,12 @@ esbenp.prettier-vscode
 formulahendry.code-runner
 github.vscode-github-actions
 golang.go
+hashicorp.terraform
 mechatroner.rainbow-csv
 mikael.angular-beastcode
 ms-azuretools.vscode-containers
 ms-azuretools.vscode-docker
+ms-kubernetes-tools.vscode-kubernetes-tools
 ms-python.debugpy
 ms-python.python
 ms-python.vscode-pylance
@@ -28,9 +27,12 @@ openai.chatgpt
 openai.codex-audio
 oracle.oracle-java
 pkief.material-icon-theme
+redhat.ansible
 redhat.java
 redhat.vscode-yaml
 ritwickdey.liveserver
+samuelcolvin.jinjahtml
+tim-koehler.helm-intellisense
 tomoki1207.pdf
 usernamehw.errorlens
 vscjava.vscode-gradle
@@ -40,5 +42,4 @@ vscjava.vscode-java-pack
 vscjava.vscode-java-test
 vscjava.vscode-maven
 vscodevim.vim
-william-voyek.vscode-nginx
 xabikos.javascriptsnippets
