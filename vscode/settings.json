@@ -122,6 +122,9 @@
         "editor.formatOnSave": false
     },
     "[helm]": {
+        // vscode-yaml 1.20+ can still check helm files; templates aren't valid yaml
+        "yaml.validate": false,
+        "yaml.format.enable": false,
         "editor.tabSize": 2,
         "editor.insertSpaces": true,
         "editor.formatOnSave": false
@@ -137,8 +140,7 @@
 
     // Ansible tooling
     "ansible.validation.enabled": true,
-    "ansible.validation.lint.enabled": true,
-    "ansible.validation.lint.path": "/opt/homebrew/bin/ansible-lint",
+    "ansible.validation.lint.enabled": false,
     "ansible.ansible.path": "/opt/homebrew/bin/ansible",
     "ansible.lightspeed.enabled": false,
 
