@@ -37,6 +37,10 @@ if [ ! -d /Applications/Docker.app ]; then
   sudo hdiutil detach /Volumes/Docker
 fi
 
+# terraform
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
+
 {{- else if eq .chezmoi.os "linux" -}}
 
 # packages
@@ -118,6 +122,11 @@ curl -fsSL -o /tmp/yazi.zip https://github.com/sxyazi/yazi/releases/latest/downl
 unzip -o /tmp/yazi.zip -d /tmp
 install -m 755 /tmp/$yazi/yazi /tmp/$yazi/ya ~/.local/bin/
 cp /tmp/$yazi/completions/_yazi /tmp/$yazi/completions/_ya ~/.zsh/completion/
+
+# terraform
+wget -O- https://rpm.releases.hashicorp.com/fedora/hashicorp.repo | sudo tee /etc/yum.repos.d/hashicorp.repo
+sudo yum list available | grep hashicorp
+sudo dnf -y install terraform
 
 {{- end }}
 

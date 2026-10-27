@@ -79,6 +79,7 @@ alias lsa='ls -lah'
 alias grep='grep --color=auto'
 alias -- -='cd -'
 alias k="kubectl"
+alias tf="terraform"
 
 
 # Generated for envman. Do not edit.

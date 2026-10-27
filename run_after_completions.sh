@@ -12,3 +12,7 @@ done
 if command -v bun >/dev/null; then
   SHELL=zsh bun completions > ~/.zsh/completion/_bun
 fi
+
+if command -v terraform >/dev/null; then
+  printf '#compdef terraform\nautoload -U +X bashcompinit && bashcompinit\ncomplete -o nospace -C "%s" terraform\n' "$(which terraform)" > ~/.zsh/completion/_terraform
+fi
